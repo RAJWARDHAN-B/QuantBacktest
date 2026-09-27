@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 import pytest
 
@@ -34,7 +36,7 @@ def test_walk_forward_splits_reject_invalid_sizes() -> None:
         list(walk_forward_splits(pd.DataFrame({"x": [1, 2]}), train_size=0, test_size=1))
 
 
-def test_walk_forward_evaluation_reports_out_of_sample_parameter_sensitivity() -> None:
+def test_walk_forward_evaluation_reports_out_of_sample_parameter_sensitivity(tmp_path) -> None:
     closes = [100.0, 100.0, 80.0, 100.0, 100.0, 100.0, 80.0, 100.0, 100.0, 100.0]
     prices = pd.DataFrame(
         {
@@ -47,6 +49,7 @@ def test_walk_forward_evaluation_reports_out_of_sample_parameter_sensitivity() -
         index=pd.date_range("2024-01-01", periods=len(closes)),
     )
 
+    ledger_path = tmp_path / "research" / "experiments.jsonl"
     result = evaluate_walk_forward(
         prices,
         symbol="TEST",
@@ -56,6 +59,7 @@ def test_walk_forward_evaluation_reports_out_of_sample_parameter_sensitivity() -
         ],
         train_size=6,
         test_size=2,
+        experiment_ledger_path=ledger_path,
     )
 
     assert len(result.folds) == 2
@@ -63,3 +67,6 @@ def test_walk_forward_evaluation_reports_out_of_sample_parameter_sensitivity() -
     assert len(result.parameter_summary) == 2
     assert result.folds.iloc[0]["test_start"] == prices.index[6]
     assert result.sensitivity.groupby("fold")["observations"].first().tolist() == [1, 1]
+    entry = json.loads(ledger_path.read_text().splitlines()[0])
+    assert entry["kind"] == "walk_forward"
+    assert len(entry["folds"]) == 2

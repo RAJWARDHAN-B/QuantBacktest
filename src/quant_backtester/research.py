@@ -4,7 +4,10 @@ from __future__ import annotations
 
 from collections.abc import Iterator, Mapping, Sequence
 from dataclasses import dataclass
+from datetime import datetime, timezone
+import json
 from math import isfinite
+from pathlib import Path
 from typing import Any
 
 import pandas as pd
@@ -22,6 +25,26 @@ class WalkForwardResult:
     folds: pd.DataFrame
     sensitivity: pd.DataFrame
     parameter_summary: pd.DataFrame
+
+
+def append_experiment_record(path: str | Path, record: Mapping[str, Any]) -> None:
+    """Append one reproducible experiment record as a JSON Lines entry."""
+    ledger_path = Path(path)
+    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+    entry = {
+        "recorded_at": datetime.now(timezone.utc).isoformat(),
+        **record,
+    }
+    with ledger_path.open("a", encoding="utf-8") as ledger:
+        ledger.write(json.dumps(entry, sort_keys=True, default=_json_default) + "\n")
+
+
+def _json_default(value: Any) -> Any:
+    if isinstance(value, pd.Timestamp):
+        return value.isoformat()
+    if hasattr(value, "item"):
+        return value.item()
+    return str(value)
 
 
 def chronological_split(
@@ -77,6 +100,7 @@ def evaluate_walk_forward(
     max_position_size: int | None = None,
     max_portfolio_exposure: float | None = None,
     market_impact_bps: float = 0.0,
+    experiment_ledger_path: str | Path | None = None,
 ) -> WalkForwardResult:
     """Select parameters on each training window and report held-out results.
 
@@ -182,8 +206,27 @@ def evaluate_walk_forward(
             lambda parameter_index: dict(parameter_sets[int(parameter_index)])
         ),
     )
-    return WalkForwardResult(
+    result = WalkForwardResult(
         folds=pd.DataFrame(fold_rows),
         sensitivity=sensitivity,
         parameter_summary=parameter_summary,
     )
+    if experiment_ledger_path is not None:
+        append_experiment_record(
+            experiment_ledger_path,
+            {
+                "kind": "walk_forward",
+                "configuration": {
+                    "symbol": symbol,
+                    "parameter_sets": [dict(parameters) for parameters in parameter_sets],
+                    "train_size": train_size,
+                    "test_size": test_size,
+                    "step_size": step_size,
+                    "selection_metric": selection_metric,
+                    **backtest_options,
+                },
+                "folds": result.folds.to_dict(orient="records"),
+                "parameter_summary": result.parameter_summary.to_dict(orient="records"),
+            },
+        )
+    return result

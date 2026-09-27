@@ -181,3 +181,52 @@ def run_multi_asset_backtest(
         portfolio=portfolio,
         rejections=rejections,
     )
+
+
+def asset_return_correlation(prices: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Return pairwise correlations of aligned close-to-close asset returns."""
+    if len(prices) < 2:
+        raise ValueError("At least two assets are required for correlation analysis")
+
+    returns = {
+        symbol: validate_ohlcv(frame)["Close"].pct_change(fill_method=None)
+        for symbol, frame in prices.items()
+    }
+    aligned_returns = pd.concat(returns, axis=1)
+    if aligned_returns.dropna(how="all").empty:
+        raise ValueError("At least one return observation is required")
+    return aligned_returns.corr()
+
+
+def exposure_report(equity_curve: pd.DataFrame) -> pd.DataFrame:
+    """Report marked gross exposure, portfolio weights, and HHI by timestamp."""
+    if "equity" not in equity_curve:
+        raise ValueError("Equity curve must contain an 'equity' column")
+    position_columns = [column for column in equity_curve if column.startswith("position_")]
+    symbols = [column.removeprefix("position_") for column in position_columns]
+    if not symbols:
+        raise ValueError("Equity curve must contain multi-asset position columns")
+
+    exposures = pd.DataFrame(index=equity_curve.index)
+    for symbol in symbols:
+        price_column = f"close_{symbol}"
+        if price_column not in equity_curve:
+            raise ValueError(f"Equity curve is missing '{price_column}'")
+        positions = equity_curve[f"position_{symbol}"].astype(float)
+        prices = equity_curve[price_column].astype(float).fillna(0.0)
+        exposures[symbol] = (positions * prices).abs()
+
+    gross_exposure = exposures.sum(axis=1)
+    equity = equity_curve["equity"].astype(float)
+    if equity.empty or not equity.map(lambda value: pd.notna(value) and value > 0).all():
+        raise ValueError("Equity values must be positive and non-empty")
+
+    weights = exposures.div(gross_exposure.where(gross_exposure > 0), axis=0).fillna(0.0)
+    report = pd.DataFrame(index=equity_curve.index)
+    report["gross_exposure"] = gross_exposure
+    report["gross_exposure_fraction"] = gross_exposure / equity
+    report["concentration_hhi"] = weights.pow(2).sum(axis=1)
+    for symbol in symbols:
+        report[f"exposure_{symbol}"] = exposures[symbol]
+        report[f"weight_{symbol}"] = weights[symbol]
+    return report

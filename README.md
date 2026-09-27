@@ -2,7 +2,7 @@
 
 A beginner-friendly Python project for learning quantitative finance through software development.
 
-The project is a historical daily-data event-driven backtester with a mean-reversion strategy, execution costs, risk metrics, chronological research splits, a shared-cash multi-asset engine, a CLI, and an optional local dashboard. It does not connect to a broker or process live/tick data.
+The project is a historical daily-data event-driven backtester with a mean-reversion strategy, execution costs, risk metrics, chronological research splits, a shared-cash multi-asset engine, a CLI, and an optional local terminal dashboard. It does not connect to a broker or process live/tick data.
 
 ## Project Layout
 
@@ -42,7 +42,7 @@ Start the local dashboard:
 streamlit run src/quant_backtester/dashboard.py
 ```
 
-The dashboard accepts a local CSV, an uploaded CSV, or daily Yahoo Finance history. It displays strategy and buy-and-hold equity curves, drawdown, metrics, fills, and unfilled quantities.
+The dashboard accepts a local CSV, uploaded CSV files, or daily Yahoo Finance history. It supports single- and multi-asset runs and displays portfolio equity, drawdown, performance metrics, fills, unfilled quantities, asset return correlation, and exposure concentration.
 
 Download historical daily data from Yahoo Finance:
 
@@ -118,6 +118,38 @@ python -m quant_backtester.cli download SPY \
   --start 2020-01-01 --end 2024-01-01 --output data/SPY.csv
 ```
 
+For shared-cash multi-asset runs, create a JSON config. Dataset paths are relative to the config file; per-symbol strategy values override the shared strategy settings:
+
+```json
+{
+  "initial_cash": 10000,
+  "commission": 1.0,
+  "slippage_bps": 5,
+  "max_position_size": 100,
+  "max_portfolio_exposure": 0.8,
+  "market_impact_bps": 10,
+  "strategy": {"lookback": 20, "z_threshold": 1.5},
+  "symbols": {
+    "SPY": {"csv": "../data/SPY.csv"},
+    "QQQ": {
+      "csv": "../data/QQQ.csv",
+      "strategy": {"lookback": 30, "z_threshold": 1.8}
+    }
+  }
+}
+```
+
+Run it and optionally append the experiment to a JSON Lines ledger:
+
+```bash
+python -m quant_backtester.cli multi-backtest config/multi_asset.json \
+  --output-directory reports/multi_asset \
+  --experiment-ledger reports/experiments.jsonl \
+  --log-level INFO
+```
+
+The report includes the shared equity, fill and rejection ledgers, performance metrics, timestamped gross exposure and concentration, and pairwise close-return correlations. `--experiment-ledger` is also available on single-asset CLI runs. `evaluate_walk_forward` accepts `experiment_ledger_path` to persist fold selections and parameter summaries. CLI log records are JSON on stderr and default to warnings only.
+
 For multi-symbol research, pass a mapping of symbol-to-OHLCV frames and symbol-to-strategy instances to `run_multi_asset_backtest` in `quant_backtester.multi_asset`. All symbols share the same cash balance; same-timestamp bars are processed in symbol order.
 
 Run expanding walk-forward parameter selection and out-of-sample sensitivity reporting:
@@ -139,6 +171,7 @@ report = evaluate_walk_forward(
   selection_metric="sharpe_ratio",
   max_portfolio_exposure=0.8,
   market_impact_bps=10,
+  experiment_ledger_path="reports/experiments.jsonl",
 )
 
 print(report.folds)
@@ -162,13 +195,13 @@ Implemented so far:
 - Phase 6: configurable commission, adverse slippage, volume-based impact, cash-aware fills, share and portfolio exposure limits, and a partial-fill/rejection ledger
 - Phase 7: annualized return and volatility, Sharpe ratio, max drawdown and duration, and closed-trade win rate/PnL/profit factor
 - Phase 9 core: multi-asset event replay with shared cash and combined equity marking
-- Phase 10 dashboard: local historical research interface with benchmark, risk, trade, and rejection views
+- Phase 9: JSON-configured multi-asset CLI runs, return correlation, exposure/concentration analysis, and structured JSON logging
+- Phase 10 dashboard: local historical single- and multi-asset research terminal with benchmark, risk, trade, allocation, and rejection views
 - CLI workflows: validated Yahoo Finance download and CSV backtest report export
-- Phase 8: chronological holdout, expanding walk-forward splits, training-window parameter selection, out-of-sample fold evaluation, and parameter-sensitivity summaries
+- Phase 8: chronological holdout, expanding walk-forward splits, training-window parameter selection, out-of-sample fold evaluation, parameter-sensitivity summaries, and an optional persistent experiment ledger
 
 What is still pending:
 
-- Phase 9: configuration-file-driven multi-asset CLI runs, correlation/concentration analysis, and structured logging
 - Phase 10+: a broker-specific live-data/order connection, tick data, and advanced execution research. A provider and credentials are required; Yahoo Finance currently supplies historical daily bars only.
 
 The dashboard uses historical bars only. Yahoo Finance is a convenience data source, not a broker feed, and the simulated fills are not suitable for live trading.
@@ -399,7 +432,7 @@ Build:
 
 - Chronological holdout splitting and expanding walk-forward fold generation without shuffling.
 - Training-window parameter selection, out-of-sample evaluation, and per-parameter fold and aggregate reports are implemented in the Python API.
-- A persistent experiment-results ledger remains future work.
+- CLI backtests and optional walk-forward runs can append reproducible records to a JSON Lines experiment ledger.
 
 Completion check:
 
@@ -419,10 +452,10 @@ Learn:
 
 Build:
 
-- Multiple symbols with separate positions and shared cash in the Python API.
-- Per-symbol maximum share limits and a combined equity curve.
+- Multiple symbols with separate positions and shared cash in the Python API and JSON-configured CLI.
+- Per-symbol maximum share limits, a combined equity curve, return correlations, and exposure/concentration reports.
 - CLI download and single-symbol backtest/report commands.
-- Config-file-driven multi-asset CLI runs, correlation/concentration analysis, and structured logging are still pending.
+- Structured JSON logs are available for CLI workflows.
 
 Completion check:
 
