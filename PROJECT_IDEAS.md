@@ -36,6 +36,16 @@ A list of 14 high-impact portfolio projects across Quant Finance and Investment 
 - **Automated Trading Comparable Analysis ("Comps") Builder**
   - A Python web scraper and data modeler that takes a target company, identifies its closest sector competitors, pulls real-time EV/EBITDA, P/E, and EV/Revenue multiples, and automatically builds a relative valuation summary table.
 
+  1. Automated "Comps" (Trading Comparables) & Deal Teaser Generator
+The Problem: When an IB analyst is handed a new pitch, one of the first tasks is to pull the latest trading multiples (EV/EBITDA, P/E, EV/Revenue) for 10–15 public peer companies and throw them into a clean slide layout.
+
+The Solution: A Python-based tool that takes a target company's ticker, queries financial data APIs (like Yahoo Finance, Alpha Vantage, or SEC EDGAR), calculates live median/mean peer multiples, and programmatically populates a PowerPoint template (python-pptx) or web dashboard with valuation comps tables and football field charts.
+
+2. AI-Powered Data Room (VDR) Due Diligence & Red Flag Extractor
+The Problem: In M&A sell-side or buy-side mandates, buyers pore through hundreds of contracts, customer agreements, and financial audits inside a Virtual Data Room (VDR).
+
+The Solution: A RAG (Retrieval-Augmented Generation) application where users can upload a folder of complex legal and financial PDFs (e.g., commercial agreements, debt covenants, historical audits), query them in natural language, and automatically export a due diligence risk matrix highlighting key liabilities, change-of-control clauses, and revenue concentrations.
+
 ## Original Backtester Brief
 
 - Build an event-driven backtesting engine in Python or C++.
