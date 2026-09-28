@@ -1,0 +1,19 @@
+{
+  "cik": "0000000002",
+  "name": "First Example Bancorp",
+  "sic": "6022",
+  "sicDescription": "State Commercial Banks",
+  "tickers": ["BNK"],
+  "exchanges": ["NYSE"],
+  "fiscalYearEnd": "1231",
+  "filings": {
+    "recent": {
+      "accessionNumber": ["0000000002-25-000003"],
+      "filingDate": ["2025-02-28"],
+      "reportDate": ["2024-12-31"],
+      "form": ["10-K"],
+      "primaryDocument": ["bnk-20241231.htm"]
+    },
+    "files": []
+  }
+}

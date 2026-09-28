@@ -1,0 +1,213 @@
+Honestly? Yes — I would start now. Not because MBRDI is likely to magically have a Jan–June internship opening, but because your situation makes a cold approach particularly sensible.
+I checked MBRDI specifically. Mercedes-Benz Research & Development India has a Pune office in Hinjewadi, and MBRDI explicitly has internship/recruitment contacts listed through Mercedes-Benz's careers system. Their Pune office is described as an R&D site with work around engineering, IT and product development.
+Interestingly, the official MBRDI LinkedIn jobs page currently shows no jobs posted, so your observation that there isn't an obvious public opening is valid. LinkedIn
+Your timeline actually makes sense
+You're looking at something like:
+Now — Sept 2026→ 7th semester→ Michelin internship ongoing
+Until Jan 2027→ Michelin internship
+Jan → June/July 2027→ potential gap
+June/July 2027 onward→ Mastercard FTE, assuming the offer is finalized
+So I wouldn't frame MBRDI as "I need a job because I have nothing after Michelin."
+I'd frame it as:
+"I'm looking for a 4–5 month engineering/R&D internship from February 2027 to June 2027, and I'm interested in contributing to MBRDI's work in X."
+That's a much stronger proposition.
+And there's another reason I'd start now rather than December: Mercedes-Benz's general internship guidance says internships can be 1–6 months, and the broader Mercedes-Benz career ecosystem explicitly handles internships separately from graduate/professional hiring. Mercedes-Benz Group
+You don't know whether MBRDI has a team that could accommodate you yet. That's exactly why you want to initiate the conversation months in advance.
+But I would NOT send a generic "Dear HR, please give me an internship" email
+This is the important part.
+Your highest-leverage approach is probably:
+1. Find the exact teams at MBRDI Pune relevant to your profile.
+MBRDI's work spans areas including product development, CAE/simulation, electrical/electronics, IT engineering, embedded systems, etc. MBRDI
+2. Find 10–20 people at MBRDI who work in those areas.
+Not necessarily HR.
+Think:
+* Engineers
+* Senior engineers
+* Technical leads
+* Managers
+* Project leads
+* Researchers
+* Alumni from your college
+3. Contact employees + HR/recruitment in parallel.
+MBRDI's official Mercedes-Benz location page currently lists:
+* MBRDI Recruitment: mbrdi_recruitment@mercedes-benz.com
+* Internship: tanushree.pawar@mercedes-benz.com Mercedes-Benz Group 
+So you actually have something much better than blindly guessing an HR email.
+4. Don't ask them to "consider you for any opportunity."
+Give them a very specific proposition:
+I'm available for a full-time internship from approximately Feb 2027 to June 2027.
+And then explain what you can contribute in 2–3 lines.
+
+The timing I'd use
+If I were planning this with you, I'd do:
+16–30 September
+Build the pipeline.
+* Polish CV
+* Make a 1-page version specifically for MBRDI
+* Identify 15–25 relevant MBRDI employees
+* Identify 2–3 relevant MBRDI domains/teams
+* Start LinkedIn outreach
+* Send the first cold emails
+October
+Follow up + expand.
+If someone responds:
+"Send me your CV."
+You send it immediately.
+If someone says:
+"We don't have openings."
+You can politely ask whether they know of a team that takes short-term interns / whether you can be considered for upcoming requirements.
+If nobody responds, don't interpret silence as rejection. Continue with another batch.
+November–December
+This is where I'd become more aggressive.
+You want to know whether there is any realistic possibility of a Feb 2027 start.
+At this point, you can also approach people who have recently posted about interns/projects at MBRDI. There is evidence of six-month internships at MBRDI, including recent examples in engineering/manufacturing-related work. LinkedIn
+January
+If nothing materializes, you still have time to pursue alternatives.
+That's the key.
+You're not betting your future on MBRDI.
+You're creating another option while your Michelin → Mastercard path is already developing.
+
+One thing I'd change in your thinking
+Don't think:
+"MBRDI is highly unlikely, so is it even worth trying?"
+Think:
+"The downside of trying is a few hours of outreach. The upside is a very good 4–5 month opportunity."
+Cold emailing is particularly reasonable here because there isn't currently a public job listing you're trying to compete against. You're essentially asking whether a team has an upcoming requirement that hasn't been advertised.
+And MBRDI isn't some tiny organization where finding relevant people is impossible. It currently describes itself as having 8,500+ professionals across digital product development, interior component design, IT engineering and services, with offices in Bengaluru and Pune. MBRDI
+So there are a lot of potential internal paths.
+
+There's also a strategic advantage for you
+You already have Michelin on your CV.
+That's important.
+You're not approaching MBRDI as:
+"I'm a student looking for my first experience."
+You're approaching them as:
+7th-semester engineering student + 6-month Michelin internship + available for a defined Feb–June 2027 internship.
+And if your Michelin work is technically relevant to whatever MBRDI team you're approaching, that's even better.
+The email should therefore spend very little time talking about how much you want Mercedes-Benz.
+Instead:
+Who you are → what you've worked on → what specifically interests you at MBRDI → exact availability → CV.
+That is much more compelling.
+
+And one more thing: don't wait for the PPO decision.
+This is probably the most important advice I'd give you.
+You don't need to choose between:
+Michelin PPO vs Mastercard vs MBRDI
+right now.
+You can pursue all three tracks simultaneously.
+Your current situation is basically:
+Michelin:6-month internship → PPO uncertain
+Mastercard:FTE → offer mostly secured but not fully confirmed
+MBRDI:Potential Feb–June internship → not yet explored
+That's actually a pretty healthy position to be in. Your goal between September and December should be to increase the number of concrete options, not prematurely decide which one you'll take.
+And yes, September 16 is absolutely not too early. I'd actually argue this is a good time to start because you're targeting a February start and you want enough runway for the completely normal back-and-forth of cold outreach.
+If you want, send me your current CV + your branch/degree + what exactly you're doing at Michelin + the Mastercard role, and I can help you build the MBRDI strategy properly — which teams to target, whom to approach, what to say in the cold email/LinkedIn DM, and how I'd sequence the outreach from today through January.
+
+
+Yep — I checked this more carefully, including the current MBRDI/MB career pages and publicly indexed recruiter profiles. And you're right about Tanushree: the official MBRDI location page still lists her old internship contact, but that page is evidently stale. Mercedes-Benz Group
+The useful thing is that I found a few actual MBRDI recruitment/talent people you can target.
+Person	Current/relevant role	Email	How I'd use them
+Babu Rajendra Prasad	Lead – Campus Hiring & Engagement, MBRDI	Not publicly indexed	⭐⭐⭐ Very relevant for an internship/campus approach
+Rohith Kengal Keerthy	Assistant Manager / Talent Acquisition; handles R&D recruitment	rohith.kengal@mercedes-benz.com	⭐⭐⭐ Strong target
+Kiran K	Recruiter, MBRDI	lancesoft.k@mercedes-benz.com	⭐⭐ Relevant recruiter contact
+Nagendra Babu	Assistant Manager – Talent Acquisition, MBRDI	Not publicly indexed	⭐⭐ Worth LinkedIn outreach
+Rayan Avitash	Talent Acquisition / Campus Recruitment, MBRDI	Not publicly indexed	⭐⭐ Relevant, although I'd verify current employment before contacting
+Ritesh Agrawal	Senior Manager – HRBP, MBRDI	Not publicly indexed	⭐ More senior HR route
+Rohith K	Talent/HR; recruitment for R&D teams	rohith.kengal@mercedes-benz.com	⭐⭐⭐ Particularly relevant
+The strongest evidence for Babu is his current LinkedIn profile: it identifies him as Lead – Campus Hiring & Engagement at MBRDI, with the role beginning in 2022. His posts also show involvement with MBRDI's trainee/campus programs. LinkedIn
+For Rohith Kengal Keerthy, I found his email publicly attached to MBRDI job postings, alongside his MBRDI recruitment role. Glassdoor+1
+For Kiran K, similarly, a Mercedes-Benz/MBRDI job listing publicly gives lancesoft.k@mercedes-benz.com as the contact. His LinkedIn profile identifies him as a recruiter at MBRDI. Indeed+1
+One important distinction
+I wouldn't email every person on this list with the same message.
+I'd prioritize:
+1. Rohith Kengal Keerthy — direct email + R&D recruitment
+2. Babu Rajendra Prasad — campus hiring & engagement
+3. Kiran K — recruiter
+4. Nagendra Babu — talent acquisition
+5. Rayan Avitash — only after confirming he's still at MBRDI
+And then separately use LinkedIn to approach actual engineering managers/leads in the specific MBRDI domain matching your Michelin work. That could actually be more valuable than sending 10 HR emails.
+Also, don't assume an email address from someone's name. I've only included personal addresses where I found them publicly associated with MBRDI/Mercedes-Benz. The official MBRDI page currently gives mbrdi_recruitment@mercedes-benz.com as the general recruitment address, but its named internship contact is stale. Mercedes-Benz Group
+Mercedes-Benz itself says internship vacancies are generally advertised 2–6 months before the internship start, which makes your target of a Feb 2027 internship particularly interesting: September is early enough to start networking, while October–December is the window where I'd expect more concrete possibilities to emerge. Mercedes-Benz Group
+If you give me your branch + Michelin internship domain/project + Mastercard role, I can go one level deeper and find 10–15 MBRDI engineering managers/leads specifically relevant to your profile, rather than just HR people. That's probably where I'd put the bulk of your cold-outreach effort.
+Here is a structured list of verified email-backed contacts and key HR/Talent Acquisition personnel for Mercedes-Benz Research & Development India (MBRDI) and its associated entities in Pune/Bengaluru, formatted for your outreach strategy.
+
+1. Verified Talent Acquisition & HR Contacts (Direct Email)
+Name	Role / Focus Area	Email Address	Priority / Context
+Rohith Kengal Keerthy	Assistant Manager / Talent Acquisition (R&D focus)	rohith.kengal@mercedes-benz.com	⭐⭐⭐ Top HR target for technical/R&D roles.
+Kiran K	Recruiter (MBRDI / Partner Channel)	lancesoft.k@mercedes-benz.com	⭐⭐ Active handling of tech listings.
+Babu Rajendra Prasad	Lead – Campus Hiring & Engagement	Via LinkedIn / Internal Directory	⭐⭐⭐ Ideal for student/internship pipelines.
+Nagendra Babu	Assistant Manager – Talent Acquisition	Via LinkedIn Outreach	⭐⭐ General technical recruitment.
+General Inquiries / Fallback:
+
+* General MBRDI Recruitment: mbrdi_recruitment@mercedes-benz.com
+2. Pune Manufacturing & Plant Operations / Engineering Contacts
+(Note: Mercedes-Benz India's Pune plant/production facility in Chakan operates alongside the MBRDI R&D setup in Hinjewadi. These contacts handle core engineering, process, and project operations.)
+
+Name	Role	Email Domain Pattern	Focus Area
+Vishwas Gurav	Manager – Process and Project Engineering	@mercedes-benz.com	Core mechanical, production, and manufacturing processes.
+Sanjeev Mandpe	General Manager – HR (Pune Operations)	@mercedes-benz.com	Senior HR oversight for the Pune hub.
+3. Recommended Execution Plan for Outreach
+1. The Direct HR Track:Send a short, customized email to Rohith Kengal Keerthy (rohith.kengal@mercedes-benz.com). Keep it strictly focused on your availability window (Feb–June 2027), your current Michelin internship background, and your precise engineering domain.
+2. The Manager Track (LinkedIn):Instead of just relying on HR, search LinkedIn for "Engineering Manager MBRDI Pune" or "Technical Lead MBRDI" matching your exact branch (e.g., Mechanical, CAE, Embedded, or IT). Send a concise connection note with your pitch rather than a cold message block.
+3. The Pivot:If you share your branch/degree, what you are doing at Michelin, and your Mastercard role details, I can draft the exact customized cold email template you can copy-paste to these contacts.
+Focusing on Pune (specifically targeting the MBRDI R&D ecosystem in Hinjewadi or the closely linked Mercedes-Benz manufacturing and plant operations footprint in Chakan), reaching out to technical managers, project leads, and senior engineers is often much more effective than cold-emailing HR.
+The strategy for contacting them on LinkedIn or via internal routing is to target people working in domains close to your Michelin experience. Here are notable profiles and roles based in Pune to anchor your outreach:
+1. R&D & Product Engineering Contacts (Pune)
+* Chandan Pardhi Unifers AI
+    * Role: Product Design Engineer / R&D
+    * Location: Pune Unifers AI
+    * What to target them for: Ideal peer-to-senior connection if your background is in mechanical design, CAD, or automotive components.
+* Process & Project Engineering Leads (Pune Plant / R&D Interface)
+    * Vishwas Gurav
+    * Role: Manager – Process and Project Engineering
+    * Location: Pune
+    * What to target them for: Manufacturing processes, industrial engineering, or production technology domains.
+2. How to Find 10–15 More Specific Pune Managers Right Now
+Since corporate email structures at Mercedes-Benz follow standard patterns (typically firstname.lastname@mercedes-benz.com), finding the right people on LinkedIn and mapping them is your highest-leverage move.
+Go to LinkedIn and use these exact search filters set to Pune, Maharashtra, India:
+1. Query 1 (For CAE / Mechanical / Vehicle Testing):
+    * "Mercedes-Benz" OR "MBRDI" AND "Manager" AND "CAE" OR "Simulation" OR "Vehicle Dynamics"
+2. Query 2 (For Embedded / Electronics / Software):
+    * "Mercedes-Benz" OR "MBRDI" AND "Lead Engineer" OR "Project Manager" AND "Embedded" OR "AUTOSAR"
+3. Query 3 (For General Product Development):
+    * "Mercedes-Benz" OR "MBRDI" AND "Head of Department" OR "Team Lead" AND "Pune"
+3. The Template for Messaging a Pune Engineering Manager
+When messaging a senior engineer or manager directly on LinkedIn, keep it brief and value-driven. Do not ask for a job outright; ask for a brief look at a technical synergy:
+"Hi [Name], I've been following MBRDI's work out of the Hinjewadi/Pune hub, particularly regarding [mention a specific tech area matching your Michelin work, e.g., structural simulation / embedded controls].
+I’m an engineering senior currently wrapping up a 6-month internship at Michelin, specializing in [your core skill]. I am exploring a short-term 4–5 month technical internship window from Feb to June 2027 before starting a full-time role.
+Would your team happen to take on short-term interns for upcoming spring cycles, or could you point me to the right engineering lead handling this? Happy to share my CV if this aligns with any active requirements."
+
+
+Expanding your target track to include BMW TechWorks India in Pune is a brilliant move.
+BMW TechWorks India (operating out of Amar Tech Park, Balewadi, Pune, alongside major hubs in Bengaluru and Chennai) is BMW’s major capability and software/engineering hub. Because it functions heavily around software-defined vehicles, digital products, core engineering, CAE, and automotive IT, your profile (Michelin internship + upcoming Mastercard FTE) makes you a very strong candidate for a bridge internship.
+BMW Group+ 1
+
+Targeting BMW TechWorks for a February to June 2027 internship window requires a parallel strategy similar to MBRDI, but tailored to their setup.
+1. Understanding the Landscape at BMW TechWorks Pune
+* Core Domains at TechWorks: Embedded software, automotive vehicle integration, CAE/durability, CAD design (seating/exterior systems), DevOps, and cloud/backend systems. BMW TechWorks India
+* The Joint Venture Factor: BMW TechWorks India operates as a strategic powerhouse tied closely to digital and core R&D ecosystems. Because it is scaling up rapidly, they frequently look for high-intent engineering talent who can bridge physical mechanical/automotive domains with software/system thinking.
+2. High-Leverage Outreach Execution Plan
+Track A: The Talent Acquisition / HR Route
+Unlike legacy companies with completely static email systems, newer capability centers like TechWorks heavily leverage active recruitment partners and internal TA teams on LinkedIn.
+* Who to search on LinkedIn: Look up titles like "Talent Acquisition Specialist - BMW TechWorks India", "Campus Recruiter BMW TechWorks", or "HR Business Partner Pune BMW TechWorks".
+* Action: Connect with a personalized note emphasizing your exact timeline (availability from Feb 2027 to June 2027) rather than applying blindly through generalized portals where short-term custom windows get filtered out.
+Track B: The Engineering & Domain Manager Route (Highest Success Rate)
+Because BMW TechWorks handles specialized pods (e.g., CAE Simulation, Vehicle E/E, Embedded Systems, CAD/Class-A Surfaces), reaching out directly to engineering leads in Pune bypasses the volume bottleneck of HR.
+SimplyHired
+
+* Target Search Queries on LinkedIn (Set location to Pune, Maharashtra):
+    * "BMW TechWorks" AND "Engineering Manager"
+    * "BMW TechWorks" AND "CAE" OR "Durability" OR "Vehicle Integration"
+    * "BMW TechWorks" AND "Embedded" OR "Software Lead"
+3. Customized Outreach Template for BMW TechWorks
+When messaging an engineering lead or a technical manager at the Balewadi, Pune office, use a crisp, value-forward template like this:
+Subject / InMail Note: "Hi [Name], I’ve been following BMW TechWorks' digital and vehicle engineering expansion out of the Balewadi hub, particularly your team's work in [mention a relevant domain, e.g., CAE simulation / vehicle integration / embedded systems].
+I’m a senior-year engineering student currently wrapping up a 6-month technical internship at Michelin, specializing in [your core skill/domain]. Ahead of a confirmed full-time role starting mid-2027, I am exploring a focused 4–5 month technical internship window from February to June 2027.
+Would your engineering pod at TechWorks be open to taking on a high-ownership short-term intern for spring requirements, or could you point me to the right lead handling this? Happy to share my CV if this aligns with any upcoming projects."
+Summary Strategy for Your Multi-Track Playbook
+By adding BMW TechWorks to your pipeline alongside MBRDI, Michelin, and Mastercard, your tracking matrix looks like this:
+1. Michelin: Current execution (Running through early 2027).
+2. Mastercard: Secured/Pending final confirmation for post-graduation.
+3. MBRDI (Pune/Hinjewadi): Active cold-outreach track targeting R&D and team leads.
+4. BMW TechWorks (Pune/Balewadi): Active cold-outreach track targeting software/CAE/vehicle integration pods.
+If you share your engineering branch and your Michelin internship domain, I can map out the exact keywords and specific team sub-domains you should type into LinkedIn to zero in on the right managers at BMW TechWorks Pune immediately.

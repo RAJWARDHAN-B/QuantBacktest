@@ -1,0 +1,34 @@
+name: ib-agent
+
+services:
+  analyst:
+    build:
+      context: .
+      target: runtime
+    image: ib-agent:latest
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./outputs:/app/outputs
+      - ib_cache:/app/.cache
+    stdin_open: true
+    tty: true
+
+  tests:
+    build:
+      context: .
+      target: dev
+    image: ib-agent:dev
+    network_mode: none
+    environment:
+      SEC_USER_AGENT: "IB Agent Tests tests@example.com"
+      LLM_PROVIDER: fake
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./config:/app/config
+      - ./pyproject.toml:/app/pyproject.toml:ro
+
+volumes:
+  ib_cache:

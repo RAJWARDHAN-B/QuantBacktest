@@ -1,0 +1,17 @@
+edgar:
+  # SEC fair-access limit is 10 requests/second; stay well below it.
+  requests_per_second: 5
+  timeout_seconds: 30
+  max_attempts: 5
+  # Submissions, company facts, and the ticker map are refreshed daily.
+  metadata_ttl_hours: 24
+
+valuation:
+  forecast_years: 5
+  history_years: 5
+  equity_risk_premium: 0.05
+  terminal_growth: 0.025
+  max_terminal_growth: 0.04
+  statutory_tax_rate: 0.21
+  max_tax_rate: 0.35
+  mid_year_convention: true
