@@ -1,12 +1,28 @@
-"""Simple mean-reversion trading strategy built on OHLCV close prices."""
+"""Strategy interface and a simple mean-reversion strategy built on close prices."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Protocol
 
 import pandas as pd
 
 from quant_backtester.events import MarketEvent, SignalEvent
+
+
+class Strategy(Protocol):
+    """Turns the latest bar into an optional signal without touching the portfolio.
+
+    Engines also call an optional ``prime(history: pd.DataFrame) -> None`` method
+    with validated warm-up bars (possibly empty) before replaying a run.
+    """
+
+    def generate_signal(
+        self,
+        market_event: MarketEvent,
+        close_prices: pd.Series,
+        position: int = 0,
+    ) -> SignalEvent | None: ...
 
 
 @dataclass

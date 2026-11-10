@@ -10,7 +10,7 @@ import pandas as pd
 from quant_backtester.data import validate_ohlcv
 from quant_backtester.events import FillEvent, OrderEvent, SignalEvent, stream_market_events
 from quant_backtester.portfolio import Portfolio
-from quant_backtester.strategy import MeanReversionStrategy
+from quant_backtester.strategy import Strategy
 
 
 @dataclass(frozen=True)
@@ -109,10 +109,17 @@ def _size_buy_order(
     return quantity, reason
 
 
+def prime_strategy(strategy: Strategy, history: pd.DataFrame) -> None:
+    """Call a strategy's optional ``prime`` hook with validated history."""
+    prime = getattr(strategy, "prime", None)
+    if callable(prime):
+        prime(history)
+
+
 def run_backtest(
     prices: pd.DataFrame,
     symbol: str,
-    strategy: MeanReversionStrategy,
+    strategy: Strategy,
     initial_cash: float = 10000.0,
     commission: float = 0.0,
     slippage_bps: float = 0.0,
@@ -133,6 +140,7 @@ def run_backtest(
     warmup = validate_ohlcv(warmup_prices) if warmup_prices is not None else None
     if warmup is not None and len(warmup) and warmup.index[-1] >= cleaned.index[0]:
         raise ValueError("Warm-up data must end before test data begins")
+    prime_strategy(strategy, warmup if warmup is not None else cleaned.iloc[:0])
     portfolio = Portfolio(initial_cash=initial_cash)
     close_history = warmup["Close"].copy() if warmup is not None else pd.Series(dtype=float)
     pending_order: OrderEvent | None = None

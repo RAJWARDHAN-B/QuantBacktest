@@ -11,16 +11,17 @@ from quant_backtester.backtest import (
     ExecutionConfig,
     _order_from_signal,
     _size_buy_order,
+    prime_strategy,
 )
 from quant_backtester.data import validate_ohlcv
 from quant_backtester.events import FillEvent, OrderEvent, stream_market_events
 from quant_backtester.portfolio import Portfolio
-from quant_backtester.strategy import MeanReversionStrategy
+from quant_backtester.strategy import Strategy
 
 
 def run_multi_asset_backtest(
     prices: dict[str, pd.DataFrame],
-    strategies: dict[str, MeanReversionStrategy],
+    strategies: dict[str, Strategy],
     initial_cash: float = 10000.0,
     commission: float = 0.0,
     slippage_bps: float = 0.0,
@@ -43,6 +44,8 @@ def run_multi_asset_backtest(
     )
     portfolio = Portfolio(initial_cash=initial_cash)
     cleaned = {symbol: validate_ohlcv(frame) for symbol, frame in prices.items()}
+    for symbol, frame in cleaned.items():
+        prime_strategy(strategies[symbol], frame.iloc[:0])
     market_events = merge(
         *(stream_market_events(frame, symbol) for symbol, frame in cleaned.items()),
         key=lambda event: (event.timestamp, event.symbol),

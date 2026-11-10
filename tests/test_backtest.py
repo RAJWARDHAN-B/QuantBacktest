@@ -137,3 +137,32 @@ def test_backtest_volume_impact_increases_fill_cost_at_lower_volume() -> None:
 
     assert result.trades.iloc[0]["impact_bps"] > 0.0
     assert result.trades.iloc[0]["execution_price"] > 100.0
+
+
+def test_backtest_primes_strategy_with_warmup_or_empty_history() -> None:
+    class RecordingStrategy:
+        def __init__(self) -> None:
+            self.primed: list[list[pd.Timestamp]] = []
+
+        def prime(self, history: pd.DataFrame) -> None:
+            self.primed.append(list(history.index))
+
+        def generate_signal(self, market_event, close_prices, position=0):
+            return None
+
+    prices = pd.DataFrame(
+        {
+            "Open": [100.0] * 4,
+            "High": [101.0] * 4,
+            "Low": [99.0] * 4,
+            "Close": [100.0] * 4,
+            "Volume": [1000.0] * 4,
+        },
+        index=pd.date_range("2024-01-01", periods=4),
+    )
+    strategy = RecordingStrategy()
+
+    run_backtest(prices.iloc[2:], symbol="TEST", strategy=strategy, warmup_prices=prices.iloc[:2])
+    run_backtest(prices, symbol="TEST", strategy=strategy)
+
+    assert strategy.primed == [list(prices.index[:2]), []]

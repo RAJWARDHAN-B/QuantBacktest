@@ -21,7 +21,28 @@ from quant_backtester.multi_asset import (
 )
 from quant_backtester.performance import performance_report
 from quant_backtester.research import append_experiment_record
+from quant_backtester.risk import (
+    aligned_asset_returns,
+    current_exposures,
+    equity_returns,
+    holdings_risk_report,
+    risk_report,
+    rolling_var_table,
+    shock_test,
+    stress_test,
+)
 from quant_backtester.strategy import MeanReversionStrategy
+
+
+DEFAULT_RISK_SETTINGS: dict[str, object] = {
+    "confidence_levels": [0.95, 0.99],
+    "horizon": 1,
+    "rolling_window": 250,
+    "monte_carlo": {"n_simulations": 10_000, "seed": 0},
+    "shocks": None,
+    "scenarios": None,
+    "proxies": None,
+}
 
 
 class _JsonLogFormatter(logging.Formatter):
@@ -58,6 +79,20 @@ def _add_log_level(parser: argparse.ArgumentParser) -> None:
     )
 
 
+def _add_risk_options(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument(
+        "--risk", action="store_true", help="write VaR/ES estimates and rolling VaR backtests"
+    )
+    parser.add_argument(
+        "--confidence",
+        type=float,
+        action="append",
+        help="VaR confidence level; repeat for several levels (default: 0.95 and 0.99)",
+    )
+    parser.add_argument("--risk-window", type=int, help="rolling VaR window in bars (default: 250)")
+    parser.add_argument("--risk-horizon", type=int, help="VaR horizon in bars (default: 1)")
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="quant-backtester")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -82,6 +117,7 @@ def _parser() -> argparse.ArgumentParser:
     backtest.add_argument("--z-threshold", type=float, default=1.5)
     backtest.add_argument("--output-directory", default="reports/latest")
     backtest.add_argument("--experiment-ledger")
+    _add_risk_options(backtest)
     _add_log_level(backtest)
 
     multi_backtest = commands.add_parser(
@@ -90,6 +126,7 @@ def _parser() -> argparse.ArgumentParser:
     multi_backtest.add_argument("config_path")
     multi_backtest.add_argument("--output-directory", default="reports/latest")
     multi_backtest.add_argument("--experiment-ledger")
+    _add_risk_options(multi_backtest)
     _add_log_level(multi_backtest)
     return parser
 
@@ -158,6 +195,74 @@ def _write_result_files(output_directory: Path, result, metrics: dict) -> None:
     (output_directory / "metrics.json").write_text(json.dumps(metrics, indent=2))
 
 
+def _risk_settings(arguments: argparse.Namespace, configured: object = None) -> dict[str, object]:
+    """Merge risk settings: defaults, then the config's ``risk`` block, then CLI flags."""
+    configured = {} if configured is None else configured
+    if not isinstance(configured, Mapping):
+        raise ValueError("Config 'risk' must be an object")
+    unknown = set(configured) - set(DEFAULT_RISK_SETTINGS)
+    if unknown:
+        raise ValueError(f"Unknown risk settings: {', '.join(sorted(unknown))}")
+    settings = {**DEFAULT_RISK_SETTINGS, **configured}
+    monte_carlo = settings["monte_carlo"]
+    if not isinstance(monte_carlo, Mapping) or set(monte_carlo) - {"n_simulations", "seed"}:
+        raise ValueError("Risk 'monte_carlo' may only contain n_simulations and seed")
+    settings["monte_carlo"] = {**DEFAULT_RISK_SETTINGS["monte_carlo"], **monte_carlo}
+    if arguments.confidence:
+        settings["confidence_levels"] = arguments.confidence
+    if arguments.risk_window is not None:
+        settings["rolling_window"] = arguments.risk_window
+    if arguments.risk_horizon is not None:
+        settings["horizon"] = arguments.risk_horizon
+    return settings
+
+
+def _json_records(frame: pd.DataFrame) -> list[dict[str, object]]:
+    return frame.astype(object).where(frame.notna(), None).to_dict(orient="records")
+
+
+def _write_equity_risk(
+    output_directory: Path,
+    equity_curve: pd.DataFrame,
+    settings: Mapping[str, object],
+) -> dict[str, object]:
+    report = risk_report(
+        equity_curve,
+        settings["confidence_levels"],
+        settings["horizon"],
+        settings["rolling_window"],
+    )
+    backtested_levels = [backtest["confidence"] for backtest in report["var_backtests"]]
+    if backtested_levels:
+        rolling_var_table(
+            equity_returns(equity_curve), settings["rolling_window"], backtested_levels
+        ).to_csv(output_directory / "rolling_var.csv")
+    return report
+
+
+def _write_holdings_risk(
+    output_directory: Path,
+    result,
+    prices: Mapping[str, pd.DataFrame],
+    settings: Mapping[str, object],
+) -> tuple[dict[str, object], list[dict[str, object]]]:
+    exposures = current_exposures(result.equity_curve)
+    holdings = holdings_risk_report(
+        exposures,
+        result.final_equity,
+        aligned_asset_returns(prices),
+        settings["confidence_levels"],
+        settings["horizon"],
+        n_simulations=settings["monte_carlo"]["n_simulations"],
+        seed=settings["monte_carlo"]["seed"],
+    )
+    stress = stress_test(exposures, prices, settings["scenarios"], settings["proxies"])
+    if settings["shocks"] is not None:
+        stress = pd.concat([stress, shock_test(exposures, settings["shocks"])], ignore_index=True)
+    stress.to_csv(output_directory / "stress.csv", index=False)
+    return holdings, _json_records(stress.loc[stress["symbol"] == "TOTAL"])
+
+
 def main(argv: Sequence[str] | None = None) -> None:
     arguments = _parser().parse_args(argv)
     _configure_logging(arguments.log_level)
@@ -193,11 +298,23 @@ def main(argv: Sequence[str] | None = None) -> None:
         _write_result_files(output_directory, result, metrics)
         exposure.to_csv(output_directory / "exposure.csv")
         asset_return_correlation(prices).to_csv(output_directory / "asset_correlation.csv")
+        risk = None
+        if arguments.risk or config.get("risk") is not None:
+            settings = _risk_settings(arguments, config.get("risk"))
+            holdings, stress = _write_holdings_risk(output_directory, result, prices, settings)
+            risk = {
+                "equity_curve": _write_equity_risk(
+                    output_directory, result.equity_curve, settings
+                ),
+                "holdings": holdings,
+                "stress": stress,
+            }
+            (output_directory / "risk.json").write_text(json.dumps(risk, indent=2))
         if arguments.experiment_ledger:
-            append_experiment_record(
-                arguments.experiment_ledger,
-                {"kind": "multi_asset_backtest", "configuration": config, "metrics": metrics},
-            )
+            record = {"kind": "multi_asset_backtest", "configuration": config, "metrics": metrics}
+            if risk is not None:
+                record["risk"] = risk
+            append_experiment_record(arguments.experiment_ledger, record)
         logger.info(
             "multi_asset_backtest_completed",
             extra={"symbols": sorted(prices), "final_equity": metrics["final_equity"]},
@@ -227,26 +344,31 @@ def main(argv: Sequence[str] | None = None) -> None:
     metrics = performance_report(result.equity_curve, result.trades)
     output_directory = Path(arguments.output_directory)
     _write_result_files(output_directory, result, metrics)
+    risk = None
+    if arguments.risk:
+        settings = _risk_settings(arguments)
+        risk = {"equity_curve": _write_equity_risk(output_directory, result.equity_curve, settings)}
+        (output_directory / "risk.json").write_text(json.dumps(risk, indent=2))
     if arguments.experiment_ledger:
-        append_experiment_record(
-            arguments.experiment_ledger,
-            {
-                "kind": "single_asset_backtest",
-                "symbol": arguments.symbol,
-                "configuration": {
-                    "csv_path": arguments.csv_path,
-                    "lookback": arguments.lookback,
-                    "z_threshold": arguments.z_threshold,
-                    "initial_cash": arguments.initial_cash,
-                    "commission": arguments.commission,
-                    "slippage_bps": arguments.slippage_bps,
-                    "max_position_size": arguments.max_position_size,
-                    "max_portfolio_exposure": arguments.max_portfolio_exposure,
-                    "market_impact_bps": arguments.market_impact_bps,
-                },
-                "metrics": metrics,
+        record = {
+            "kind": "single_asset_backtest",
+            "symbol": arguments.symbol,
+            "configuration": {
+                "csv_path": arguments.csv_path,
+                "lookback": arguments.lookback,
+                "z_threshold": arguments.z_threshold,
+                "initial_cash": arguments.initial_cash,
+                "commission": arguments.commission,
+                "slippage_bps": arguments.slippage_bps,
+                "max_position_size": arguments.max_position_size,
+                "max_portfolio_exposure": arguments.max_portfolio_exposure,
+                "market_impact_bps": arguments.market_impact_bps,
             },
-        )
+            "metrics": metrics,
+        }
+        if risk is not None:
+            record["risk"] = risk
+        append_experiment_record(arguments.experiment_ledger, record)
     logger.info(
         "backtest_completed",
         extra={"symbol": arguments.symbol, "final_equity": metrics["final_equity"]},
